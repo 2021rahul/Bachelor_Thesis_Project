@@ -1,0 +1,8 @@
+NORMALIZED IMAGES
+51x51 window
+batch_size=390
+nkerns=[50,80]
+filter_size=[9x9,5x5]
+dropout = 0.1,0.1,0.5
+lr = 0.01
+lr_dec = 0.4

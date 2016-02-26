@@ -470,7 +470,7 @@ def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[5
                 				binmap_xgen = np.concatenate([binmap_xgen,np.asarray(ixgen)])
                 				binmap_ygen = np.concatenate([binmap_ygen,np.asarray(iygen)])
                 				ypred = np.concatenate([ypred,np.asarray(test_labels)])
-                				yanno = np.concatenate([yanno,np.squeeze(np.asarray(yanno))])                             
+                				yanno = np.concatenate([yanno,np.squeeze(np.asarray(binmap_y))])                             
         				binary_map(testdataset[im] , im , 390*390 , ypred , binmap_xgen , binmap_ygen)
         				binary_map(testdataset[im] , im*10 , 390*390 , yanno , binmap_xgen , binmap_ygen)
                    

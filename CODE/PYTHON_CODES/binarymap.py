@@ -18,8 +18,8 @@ def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[5
     
     rng = np.random.RandomState(23455)
     
-    trainxdirname = 'Train/'
-    trainydirname = 'Train_anno/'
+    trainxdirname = '/home/amit-pc/BTP_ashima/Bachelor_Thesis_Project/total_data_normalized/Train/'
+    trainydirname = '/home/amit-pc/BTP_ashima/Bachelor_Thesis_Project/total_data_normalized/Train_anno/'
     traindataset = load_data(trainxdirname,trainydirname)
     for vdatai in range(0,65):
         imgvx,imgvy,vxgen,vygen = load_img(360,traindataset[vdatai])
@@ -35,8 +35,8 @@ def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[5
     print(sum(validy == 0))
 
 
-    testxdirname = 'Test/'
-    testydirname = 'Test_anno/'
+    testxdirname = '/home/amit-pc/BTP_ashima/Bachelor_Thesis_Project/total_data_normalized/Test/'
+    testydirname = '/home/amit-pc/BTP_ashima/Bachelor_Thesis_Project/total_data_normalized/Test_anno/'
     testdataset = load_data(testxdirname,testydirname)
     txgen = []
     tygen = []

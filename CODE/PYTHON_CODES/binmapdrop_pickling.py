@@ -266,8 +266,8 @@ def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[5
     
     rng = np.random.RandomState(23455)
     
-    trainxdirname = 'Train/'
-    trainydirname = 'Train_anno/'
+    trainxdirname = '/home/amit-pc/BTP_ashima/Bachelor_Thesis_Project/total_data_normalized/Train/'
+    trainydirname = '/home/amit-pc/BTP_ashima/Bachelor_Thesis_Project/total_data_normalized/Train_anno/'
     traindataset = load_data(trainxdirname,trainydirname)
     for vdatai in range(0,65):
         imgvx,imgvy,vxgen,vygen = load_img(360,traindataset[vdatai])
@@ -283,8 +283,8 @@ def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[5
     print(sum(validy == 0))
 
 
-    testxdirname = 'Test/'
-    testydirname = 'Test_anno/'
+    testxdirname = '/home/amit-pc/BTP_ashima/Bachelor_Thesis_Project/total_data_normalized/Test/'
+    testydirname = '/home/amit-pc/BTP_ashima/Bachelor_Thesis_Project/total_data_normalized/Test_anno/'
     testdataset = load_data(testxdirname,testydirname)
     txgen = []
     tygen = []
@@ -468,37 +468,37 @@ def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[5
 
     print 'SAVING UPDATES'
     pickle.dump(best_params, open( "weights.p", "wb" ) )
-    print 'READYING UPDATES............'
-    best_updates = [
-        (param_i,best_param_i)
-        for param_i, best_param_i in zip(params,best_params)
-    ]
-    print 'UPDATES READY...............'
-    best_model = theano.function(
-        [],
-        updates = best_updates,
-        allow_input_downcast = True,
-        on_unused_input = 'ignore'
-    )
-    print 'UPDATING BEST MODEL.........'
-    best_model()
-    print 'BEST MODEL UPDATED..........' 
-    for im in range(0,13):
-        for i in xrange(n_binmap_batches):
-            binmap_x,binmap_y,ixgen,iygen = load_img3(i+25,testdataset[im])                 
-            test_labels = test_model2(binmap_x , np.squeeze(np.asarray(binmap_y)))
-            if i==0:
-                binmap_xgen = np.asarray(ixgen)
-                binmap_ygen = np.asarray(iygen)
-                ypred = np.asarray(test_labels)
-                #yanno = np.squeeze(np.asarray(binmap_y))
-            else:
-                binmap_xgen = np.concatenate([binmap_xgen,np.asarray(ixgen)])
-                binmap_ygen = np.concatenate([binmap_ygen,np.asarray(iygen)])
-                ypred = np.concatenate([ypred,np.asarray(test_labels)])
-                #yanno = np.concatenate([yanno,np.squeeze(np.asarray(binmap_y))])                             
-        binary_map(testdataset[im] , im , 390*390 , ypred , binmap_xgen , binmap_ygen)
-        #binary_map(testdataset[im] , im*10 , 390*390 , yanno , binmap_xgen , binmap_ygen)
+    # print 'READYING UPDATES............'
+    # best_updates = [
+    #     (param_i,best_param_i)
+    #     for param_i, best_param_i in zip(params,best_params)
+    # ]
+    # print 'UPDATES READY...............'
+    # best_model = theano.function(
+    #     [],
+    #     updates = best_updates,
+    #     allow_input_downcast = True,
+    #     on_unused_input = 'ignore'
+    # )
+    # print 'UPDATING BEST MODEL.........'
+    # best_model()
+    # print 'BEST MODEL UPDATED..........' 
+    # for im in range(0,13):
+    #     for i in xrange(n_binmap_batches):
+    #         binmap_x,binmap_y,ixgen,iygen = load_img3(i+25,testdataset[im])                 
+    #         test_labels = test_model2(binmap_x , np.squeeze(np.asarray(binmap_y)))
+    #         if i==0:
+    #             binmap_xgen = np.asarray(ixgen)
+    #             binmap_ygen = np.asarray(iygen)
+    #             ypred = np.asarray(test_labels)
+    #             #yanno = np.squeeze(np.asarray(binmap_y))
+    #         else:
+    #             binmap_xgen = np.concatenate([binmap_xgen,np.asarray(ixgen)])
+    #             binmap_ygen = np.concatenate([binmap_ygen,np.asarray(iygen)])
+    #             ypred = np.concatenate([ypred,np.asarray(test_labels)])
+    #             #yanno = np.concatenate([yanno,np.squeeze(np.asarray(binmap_y))])                             
+    #     binary_map(testdataset[im] , im , 390*390 , ypred , binmap_xgen , binmap_ygen)
+    #     #binary_map(testdataset[im] , im*10 , 390*390 , yanno , binmap_xgen , binmap_ygen)
 
 if __name__ == '__main__':
     evaluate_lenet5()

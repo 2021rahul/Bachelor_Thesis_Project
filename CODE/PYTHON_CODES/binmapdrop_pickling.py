@@ -467,7 +467,7 @@ def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[5
            (best_test_loss * 100., best_test_iter + 1))
 
     print 'SAVING UPDATES'
-    pickle.dump(best_params, open( "filename.p", "wb" ) )
+    pickle.dump(best_params, open( "weights.p", "wb" ) )
     print 'READYING UPDATES............'
     best_updates = [
         (param_i,best_param_i)

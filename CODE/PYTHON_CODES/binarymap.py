@@ -14,7 +14,7 @@ from binmapdrop_pickling import *
 
 srng = RandomStreams()
 
-def binary_map(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,80], batch_size=390):
+def create_binmap(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,80], batch_size=390):
     
     rng = np.random.RandomState(23455)
     
@@ -144,4 +144,4 @@ def binary_map(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,80]
         #binary_map(testdataset[im] , im*10 , 390*390 , yanno , binmap_xgen , binmap_ygen)
 
 if __name__ == '__main__':
-    binary_map()
+    create_binmap()

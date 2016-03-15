@@ -17,47 +17,11 @@ srng = RandomStreams()
 def create_binmap(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,80], batch_size=390):
     
     rng = np.random.RandomState(23455)
-    
-    trainxdirname = '/home/amit-pc/BTP_ashima/Bachelor_Thesis_Project/total_data_normalized/Train/'
-    trainydirname = '/home/amit-pc/BTP_ashima/Bachelor_Thesis_Project/total_data_normalized/Train_anno/'
-    traindataset = load_data(trainxdirname,trainydirname)
-    for vdatai in range(0,65):
-        imgvx,imgvy,vxgen,vygen = load_img(360,traindataset[vdatai])
-        if vdatai==0:
-            validx = imgvx
-            validy = imgvy
-        else:
-            validx = np.concatenate([validx,imgvx])
-            validy = np.concatenate([validy,imgvy])
-    print validx.shape
-    print('valid dataset')
-    print(sum(validy == 1))
-    print(sum(validy == 0))
-
 
     testxdirname = '/home/amit-pc/BTP_ashima/Bachelor_Thesis_Project/total_data_normalized/Test/'
     testydirname = '/home/amit-pc/BTP_ashima/Bachelor_Thesis_Project/total_data_normalized/Test_anno/'
     testdataset = load_data(testxdirname,testydirname)
-    txgen = []
-    tygen = []
-    for testi in range(0,13):
-        imgvx,imgvy,xgen,ygen = load_img(1800,testdataset[testi])
-        txgen.append(xgen)
-        tygen.append(ygen)
-        if testi==0:
-            testx = imgvx
-            testy = imgvy
-        else:
-            testx = np.concatenate([testx,imgvx])
-            testy = np.concatenate([testy,imgvy])
-    print testx.shape  
-    print('test dataset')
-    print(sum(testy == 1))
-    print(sum(testy == 0))
 
-    n_train_batches = 600
-    n_valid_batches = validx.shape[0]/batch_size
-    n_test_batches = testx.shape[0]/batch_size
     n_binmap_batches = 390
 
     x = T.matrix('x')   

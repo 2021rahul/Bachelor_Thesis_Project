@@ -14,7 +14,7 @@ from binmapdrop_pickling import *
 
 srng = RandomStreams()
 
-def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,80], batch_size=390):
+def binary_map(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,80], batch_size=390):
     
     rng = np.random.RandomState(23455)
     
@@ -108,7 +108,23 @@ def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[5
     params = layer3.params + layer2.params + layer1.params + layer0.params
 
     print 'GETTING UPDATES'
-    params = pickle.load(open( "weights.p", "wb" ))
+    best_params = pickle.load(open( "weights.p", "rb" ))
+
+    print 'READYING UPDATES............'
+    best_updates = [
+        (param_i,best_param_i)
+        for param_i, best_param_i in zip(params,best_params)
+    ]
+    print 'UPDATES READY...............'
+    best_model = theano.function(
+        [],
+        updates = best_updates,
+        allow_input_downcast = True,
+        on_unused_input = 'ignore'
+    )
+    print 'UPDATING BEST MODEL.........'
+    best_model()
+    print 'BEST MODEL UPDATED..........' 
 
     for im in range(0,13):
         for i in xrange(n_binmap_batches):
@@ -128,4 +144,4 @@ def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[5
         #binary_map(testdataset[im] , im*10 , 390*390 , yanno , binmap_xgen , binmap_ygen)
 
 if __name__ == '__main__':
-    evaluate_lenet5()
+    binary_map()

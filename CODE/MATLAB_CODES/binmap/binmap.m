@@ -1,4 +1,4 @@
-for i=0:11
+for i=4:11
     nimg = strcat(int2str(i),'.mat');
     load(nimg);
     img = bin_map.*255;

@@ -18,7 +18,7 @@ def create_binmap(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,
     
     rng = np.random.RandomState(23455)
 
-    testxdirname = '/Test/'
+    testxdirname = 'Test/'
     testydirname = 'Test_anno/'
     testdataset = load_data(testxdirname,testydirname)
 

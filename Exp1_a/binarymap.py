@@ -18,7 +18,7 @@ def create_binmap(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,
     
     rng = np.random.RandomState(23455)
 
-    testxdirname = '/Test/'
+    testxdirname = 'Test/'
     testydirname = 'Test_anno/'
     testdataset = load_data(testxdirname,testydirname)
 
@@ -91,6 +91,7 @@ def create_binmap(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,
     print 'BEST MODEL UPDATED..........' 
 
     for im in range(0,80):
+        print im
         nrow = testdataset[im][0].shape[0]
         for i in xrange(n_binmap_batches):
             binmap_x,binmap_y,ixgen,iygen = load_tl_img(i+25,testdataset[im])                 

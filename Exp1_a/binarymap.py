@@ -90,7 +90,7 @@ def create_binmap(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,
     best_model()
     print 'BEST MODEL UPDATED..........' 
 
-    for im in range(0,80):
+    for im in range(13,80):
         print im
         nrow = testdataset[im][0].shape[0]
         for i in xrange(n_binmap_batches):

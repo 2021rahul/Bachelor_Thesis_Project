@@ -7,5 +7,9 @@ temp = S & (~G);
 FP = sum(sum(temp(:,:)==1));
 temp = (~S) & G;
 FN = sum(sum(temp(:,:)==1));
-score = 2*TP/(2*TP + FP + FN);
+
+precision = TP/(TP + FP);
+recall = TP/(TP + FN);
+
+score = (2*precision*recall)/(precision+recall);
 end

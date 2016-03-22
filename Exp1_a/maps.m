@@ -1,4 +1,4 @@
-for i = 63:63
+for i = 77:79
     file = strcat(int2str(i),'_tl.mat');
     load(file);
     S = zeros(size(bin_map));
@@ -13,8 +13,8 @@ for i = 63:63
     file = strcat(int2str(i),'_br.mat');
     load(file);
     S = S | bin_map;
-    figure;
-    imshow(S)
+%     figure;
+%     imshow(S)
     file = strcat(int2str(i),'.bmp');
     imwrite(S, file)
     
@@ -28,8 +28,8 @@ for i = 63:63
     file = strcat(int2str(i),'_brbin.mat');
     load(file);
     G = G | bin_map;
-    figure;
-    imshow(G)
+%     figure;
+%     imshow(G)
     file = strcat(int2str(i),'_bin.bmp');
     imwrite(G, file)
 end

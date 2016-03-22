@@ -7,7 +7,7 @@ function objDice = ObjectDice(S,G)
 %      label by 0.
 %   G: a label image contains ground truth objects, meaning that each object
 %      is label with different unique integer number, and the background is
-%      label by 0.
+%      label by -2
 %   
 % Outpus:
 %   objDice: an object-level Dice index

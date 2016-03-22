@@ -1,4 +1,4 @@
-function [TP,FP,FN] = F1score(S,G)
+function score = F1score(S,G)
 % F1score calculates f1 score for detection
 %
 % Inputs:
@@ -31,9 +31,11 @@ numG = length(listG);         % the total number of ground truth objects in G
 numG
 if numS == 0 && numG == 0    % no segmented object & no ground truth objects
     score = 1;
+    print('yes\n');
     return 
 elseif numS == 0 || numG == 0
     score = 0;
+    print('yes\n');
     return
 else
     % do nothing
@@ -72,6 +74,7 @@ for iSegmentedObj = 1:numS
         end
     end
 end
+
 
 TP = sum(tempMat(:,3) == 1);
 FP = sum(tempMat(:,3) == 0);

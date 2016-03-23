@@ -1,4 +1,4 @@
-function [TP,FP,FN] = F1score_pixel(S,G)
+function score = F1score_pixel(S,G)
 S = single(S);
 G = single(G);
 temp = S & G;

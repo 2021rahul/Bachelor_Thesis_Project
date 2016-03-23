@@ -28,23 +28,17 @@ for i=0:79
         objJaccard(i+1,1) = ObjectJaccard(bw,bwa);
         score(i+1,1) = F1score_pixel(bw,bwa);        
         dice(i+1,1) = Dice(bw,bwa);
-        jaccard(i+1,1) = Jaccard(bw,bwa);
+        jaccard(i+1,1) = ctHausdorff(bw,bwa);
     end
-    if i>12 && i<76
+    if i>12 & i<76
         objscore(i,1) = F1score(bw,bwa);        
         objDice(i,1) = ObjectDice(bw,bwa);
-        objJaccard(i,1) = ObjectHauJaccard(bw,bwa);
-        score(i,1) = F1score_pixel(bw,bwa);        
-        dice(i,1) = Dice(bw,bwa);
-        jaccard(i,1) = Jaccard(bw,bwa);
+        objJaccard(i,1) = ObjectHausdorff(bw,bwa);
     end        
     if i>76
         objscore(i-1,1) = F1score(bw,bwa);        
         objDice(i-1,1) = ObjectDice(bw,bwa);
-        objJaccard(i-1,1) = ObjectJaccard(bw,bwa);
-        score(i-1,1) = F1score_pixel(bw,bwa);        
-        dice(i-1,1) = Dice(bw,bwa);
-        jaccard(i-1,1) = Jaccard(bw,bwa);
+        objJaccard(i-1,1) = ObjectHausdorff(bw,bwa);
     end
 end
 

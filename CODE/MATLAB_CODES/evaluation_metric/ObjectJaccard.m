@@ -6,13 +6,6 @@ function objJaccard = ObjectJaccard(S,G)
 S = single(S);
 G = single(G);
 
-% Check for logical image
-if ~islogical(G)
-    error('Image must be in logical format');
-end
-if ~islogical(S)
-    error('Image must be in logical format');
-end
 
 listLabelS = unique(S);             % a list of labels of objects in S
 listLabelS(listLabelS == 0) = [];

@@ -12,37 +12,64 @@ for i=0:79
     %im = strcat('C:\Users\SURENDRA JAIN\Documents\AJ\Acads\VII sem\BTP\new_result_maps\', im);
     %anno = strcat('C:\Users\SURENDRA JAIN\Documents\AJ\Acads\VII sem\BTP\new_result_maps\', anno);
     
-    S = imread(im);
-    G = imread(anno);
-    S(S>127)=255;
-    S(S<127)=0;
-    G(G>127)=255;
-    G(G<127)=0;
-    S = S/255;
-    G = G/255;
-    bw = bwlabel(S,8);
-    bwa = bwlabel(G,8);
+    
     if i<12
-        objscore(i+1,1) = F1score(bw,bwa);        
+        
+        S = imread(im);
+        G = imread(anno);
+        S(S>127)=255;
+        S(S<127)=0;
+        G(G>127)=255;
+        G(G<127)=0;
+        S = S/255;
+        G = G/255;
+        bw = bwlabel(S,8);
+        bwa = bwlabel(G,8);
+        
+        objscore(i+1,1) = F1score(bw,bwa);
         objDice(i+1,1) = ObjectDice(bw,bwa);
         objJaccard(i+1,1) = ObjectJaccard(bw,bwa);
-        score(i+1,1) = F1score_pixel(bw,bwa);        
+        score(i+1,1) = F1score_pixel(bw,bwa);
         dice(i+1,1) = Dice(bw,bwa);
         jaccard(i+1,1) = Jaccard(bw,bwa);
     end
     if i>12 && i<76
-        objscore(i,1) = F1score(bw,bwa);        
+        
+        S = imread(im);
+        G = imread(anno);
+        S(S>127)=255;
+        S(S<127)=0;
+        G(G>127)=255;
+        G(G<127)=0;
+        S = S/255;
+        G = G/255;
+        bw = bwlabel(S,8);
+        bwa = bwlabel(G,8);
+        
+        objscore(i,1) = F1score(bw,bwa);
         objDice(i,1) = ObjectDice(bw,bwa);
-        objJaccard(i,1) = ObjectHauJaccard(bw,bwa);
-        score(i,1) = F1score_pixel(bw,bwa);        
+        objJaccard(i,1) = ObjectJaccard(bw,bwa);
+        score(i,1) = F1score_pixel(bw,bwa);
         dice(i,1) = Dice(bw,bwa);
         jaccard(i,1) = Jaccard(bw,bwa);
-    end        
+    end
     if i>76
-        objscore(i-1,1) = F1score(bw,bwa);        
+        
+        S = imread(im);
+        G = imread(anno);
+        S(S>127)=255;
+        S(S<127)=0;
+        G(G>127)=255;
+        G(G<127)=0;
+        S = S/255;
+        G = G/255;
+        bw = bwlabel(S,8);
+        bwa = bwlabel(G,8);
+        
+        objscore(i-1,1) = F1score(bw,bwa);
         objDice(i-1,1) = ObjectDice(bw,bwa);
         objJaccard(i-1,1) = ObjectJaccard(bw,bwa);
-        score(i-1,1) = F1score_pixel(bw,bwa);        
+        score(i-1,1) = F1score_pixel(bw,bwa);
         dice(i-1,1) = Dice(bw,bwa);
         jaccard(i-1,1) = Jaccard(bw,bwa);
     end

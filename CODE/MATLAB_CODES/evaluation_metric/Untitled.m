@@ -7,7 +7,7 @@ score=zeros(78,1);
 
 
 for i=0:79
-    im = strcat(int2str(i), '_postof.bmp');
+    im = strcat(int2str(i), '_post.bmp');
     anno = strcat(int2str(i),'_bin.bmp');
     %im = strcat('C:\Users\SURENDRA JAIN\Documents\AJ\Acads\VII sem\BTP\new_result_maps\', im);
     %anno = strcat('C:\Users\SURENDRA JAIN\Documents\AJ\Acads\VII sem\BTP\new_result_maps\', anno);

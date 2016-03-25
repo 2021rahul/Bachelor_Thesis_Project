@@ -12,44 +12,39 @@ import scipy.io
 from theano.sandbox.rng_mrg import MRG_RandomStreams as RandomStreams
 
 srng = RandomStreams()
-def load_data(xdirname , ydirname):
+def load_data(xdirname,ydirname):
     print '...loading data'
     
     mat = []
     included_extensions = ['mat']
     filelist = [fn[:-6] for fn in os.listdir(xdirname) if any([fn.endswith(ext) for ext in included_extensions])]
     filelist = list(set(filelist))
-    print len(filelist)
     hext = '_H.mat'
     eext = '_E.mat'
+    aext = '_bin.bmp'
     for fname in filelist:
         
         xname = xdirname + fname
         hname = xname + hext
-        ename = xname + eext        
-        nrow = xim.size[0]
-        ncol = xim.size[1]    
+        ename = xname + eext
+        aname = ydirname + fname + aext
         
-        red = np.zeros((nrow,ncol))
-        green = np.zeros((nrow,ncol))
-        blue = np.zeros((nrow,ncol))
+        H = scipy.io.loadmat(hname)
+        H = H['H']
+        E = scipy.io.loadmat(ename)
+        E = E['E']\
         
-        afname = fname[:-9] + '_bin.bmp'
-        yname = ydirname + afname
-        yim = Image.open(yname)
+        yim = Image.open(aname)
+        width,height = yim.size
         ypix = yim.load() 
+        fgrnd = np.zeros((height,width))
         
-        fgrnd = np.zeros((nrow,ncol))
-        
-        for x in range(0, nrow):
-            for y in range(0,ncol):
-                red[x,y] = xpix[x,y][0]
-                green[x,y] = xpix[x,y][1]
-                blue[x,y] = xpix[x,y][2]
+        for x in range(width):
+            for y in range(height):
                 if ypix[x,y]:
-                    fgrnd[x,y] = 1.0
+                    fgrnd[y,x] = 1.0
 
-        img=np.array([red,green,blue,fgrnd])
+        img=np.array([H,E,fgrnd])
         mat.append(img)
         
     return mat
@@ -68,20 +63,18 @@ def load_img(num,img):
         y = random.randint(25,ncol-26)
             
         if(
-            img[3][x,y]==0 and num0<num/2 or
-            img[3][x,y]==1 and num1<num/2
+            img[2][x,y]==0 and num0<num/2 or
+            img[2][x,y]==1 and num1<num/2
         ):
          
-            xred = img[0][x-25:x+26,y-25:y+26]
-            xgreen = img[1][x-25:x+26,y-25:y+26]
-            xblue = img[2][x-25:x+26,y-25:y+26]
-            yval[0][0] = img[3][x,y]
+            xh = img[0][x-25:x+26,y-25:y+26]
+            xe = img[1][x-25:x+26,y-25:y+26]
+            yval[0][0] = img[2][x,y]
             
-            xred = xred.reshape((1,2601))
-            xgreen = xgreen.reshape((1,2601))
-            xblue = xblue.reshape((1,2601))
-        
-            ximg = np.concatenate([xred , xgreen , xblue] , axis=1)
+            xh = xh.reshape((1,2601))
+            xe = xe.reshape((1,2601))
+            
+            ximg = np.concatenate([xh , xe] , axis=1)
             xgen.append(x)
             ygen.append(y)
             if num0==0 and num1==0:
@@ -91,7 +84,7 @@ def load_img(num,img):
                 datax = np.concatenate([datax,ximg])
                 datay = np.concatenate([datay,yval])
                 
-            if img[3][x,y]:
+            if img[2][x,y]:
                 num1 = num1+1
             else:
                 num0 = num0+1
@@ -107,16 +100,14 @@ def load_tl_img(x,img):
     ygen = []    
     
     for y in range(25,390+25):
-        xred = img[0][x-25:x+26,y-25:y+26]
-        xgreen = img[1][x-25:x+26,y-25:y+26]
-        xblue = img[2][x-25:x+26,y-25:y+26]
-        yval[0][0] = img[3][x,y]
+        xh = img[0][x-25:x+26,y-25:y+26]
+        xe = img[1][x-25:x+26,y-25:y+26]
+        yval[0][0] = img[2][x,y]
         
-        xred = xred.reshape((1,2601))
-        xgreen = xgreen.reshape((1,2601))
-        xblue = xblue.reshape((1,2601))
+        xh = xh.reshape((1,2601))
+        xe = xe.reshape((1,2601))
     
-        ximg = np.concatenate([xred , xgreen , xblue] , axis=1)
+        ximg = np.concatenate([xh , xe] , axis=1)
         xgen.append(x)
         ygen.append(y)
         if y==25:
@@ -137,16 +128,14 @@ def load_tr_img(x,img):
     ygen = []    
     
     for y in range(ncol-25-390,ncol-25):
-        xred = img[0][x-25:x+26,y-25:y+26]
-        xgreen = img[1][x-25:x+26,y-25:y+26]
-        xblue = img[2][x-25:x+26,y-25:y+26]
-        yval[0][0] = img[3][x,y]
+        xh = img[0][x-25:x+26,y-25:y+26]
+        xe = img[1][x-25:x+26,y-25:y+26]
+        yval[0][0] = img[2][x,y]
         
-        xred = xred.reshape((1,2601))
-        xgreen = xgreen.reshape((1,2601))
-        xblue = xblue.reshape((1,2601))
+        xh = xh.reshape((1,2601))
+        xe = xe.reshape((1,2601))
     
-        ximg = np.concatenate([xred , xgreen , xblue] , axis=1)
+        ximg = np.concatenate([xh , xe] , axis=1)
         xgen.append(x)
         ygen.append(y)
         if y==ncol-25-390:
@@ -167,16 +156,14 @@ def load_bl_img(x,img):
     ygen = []    
     
     for y in range(25,415):
-        xred = img[0][x-25:x+26,y-25:y+26]
-        xgreen = img[1][x-25:x+26,y-25:y+26]
-        xblue = img[2][x-25:x+26,y-25:y+26]
-        yval[0][0] = img[3][x,y]
+        xh = img[0][x-25:x+26,y-25:y+26]
+        xe = img[1][x-25:x+26,y-25:y+26]
+        yval[0][0] = img[2][x,y]
         
-        xred = xred.reshape((1,2601))
-        xgreen = xgreen.reshape((1,2601))
-        xblue = xblue.reshape((1,2601))
+        xh = xh.reshape((1,2601))
+        xe = xe.reshape((1,2601))
     
-        ximg = np.concatenate([xred , xgreen , xblue] , axis=1)
+        ximg = np.concatenate([xh , xe] , axis=1)
         xgen.append(x)
         ygen.append(y)
         if y==25:
@@ -198,16 +185,14 @@ def load_br_img(x,img):
     ygen = []    
     
     for y in range(ncol-25-390,ncol-25):
-        xred = img[0][x-25:x+26,y-25:y+26]
-        xgreen = img[1][x-25:x+26,y-25:y+26]
-        xblue = img[2][x-25:x+26,y-25:y+26]
-        yval[0][0] = img[3][x,y]
+        xh = img[0][x-25:x+26,y-25:y+26]
+        xe = img[1][x-25:x+26,y-25:y+26]
+        yval[0][0] = img[2][x,y]
         
-        xred = xred.reshape((1,2601))
-        xgreen = xgreen.reshape((1,2601))
-        xblue = xblue.reshape((1,2601))
+        xh = xh.reshape((1,2601))
+        xe = xe.reshape((1,2601))
     
-        ximg = np.concatenate([xred , xgreen , xblue] , axis=1)
+        ximg = np.concatenate([xh , xe] , axis=1)
         xgen.append(x)
         ygen.append(y)
         if y==ncol-25-390:
@@ -228,16 +213,14 @@ def load_img3(x,img):
     ygen = []    
 
     for y in range(25,415):
-        xred = img[0][x-25:x+26,y-25:y+26]
-        xgreen = img[1][x-25:x+26,y-25:y+26]
-        xblue = img[2][x-25:x+26,y-25:y+26]
-        yval[0][0] = img[3][x,y]
+        xh = img[0][x-25:x+26,y-25:y+26]
+        xe = img[1][x-25:x+26,y-25:y+26]
+        yval[0][0] = img[2][x,y]
         
-        xred = xred.reshape((1,2601))
-        xgreen = xgreen.reshape((1,2601))
-        xblue = xblue.reshape((1,2601))
+        xh = xh.reshape((1,2601))
+        xe = xe.reshape((1,2601))
     
-        ximg = np.concatenate([xred , xgreen , xblue] , axis=1)
+        ximg = np.concatenate([xh , xe] , axis=1)
         xgen.append(x)
         ygen.append(y)
         if y==25:
@@ -435,13 +418,13 @@ def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[5
     
     print ('... building the model\n')
 
-    layer0_input = x.reshape((batch_size , 3 , 51 , 51))
+    layer0_input = x.reshape((batch_size , 2 , 51 , 51))
 
     layer0 = LeNetConvPoolLayer(
         rng,
         input=layer0_input,
-        image_shape=(batch_size, 3, 51, 51),
-        filter_shape=(nkerns[0], 3, 9, 9),
+        image_shape=(batch_size, 2, 51, 51),
+        filter_shape=(nkerns[0], 2, 9, 9),
         dropout = 0.1,
         poolsize=(2 , 2)  
     )

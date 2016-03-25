@@ -105,7 +105,7 @@ def load_tl_img(x,img):
     xgen = []
     ygen = []    
     
-    for y in range(25,390+25):
+    for y in range(25,468+25):
         xred = img[0][x-25:x+26,y-25:y+26]
         xgreen = img[1][x-25:x+26,y-25:y+26]
         xblue = img[2][x-25:x+26,y-25:y+26]
@@ -135,7 +135,7 @@ def load_tr_img(x,img):
     xgen = []
     ygen = []    
     
-    for y in range(ncol-25-390,ncol-25):
+    for y in range(ncol-25-468,ncol-25):
         xred = img[0][x-25:x+26,y-25:y+26]
         xgreen = img[1][x-25:x+26,y-25:y+26]
         xblue = img[2][x-25:x+26,y-25:y+26]
@@ -165,7 +165,7 @@ def load_bl_img(x,img):
     xgen = []
     ygen = []    
     
-    for y in range(25,415):
+    for y in range(25,468+25):
         xred = img[0][x-25:x+26,y-25:y+26]
         xgreen = img[1][x-25:x+26,y-25:y+26]
         xblue = img[2][x-25:x+26,y-25:y+26]
@@ -196,7 +196,7 @@ def load_br_img(x,img):
     xgen = []
     ygen = []    
     
-    for y in range(ncol-25-390,ncol-25):
+    for y in range(ncol-25-468,ncol-25):
         xred = img[0][x-25:x+26,y-25:y+26]
         xgreen = img[1][x-25:x+26,y-25:y+26]
         xblue = img[2][x-25:x+26,y-25:y+26]
@@ -261,7 +261,7 @@ def binary_map(img , img_i , lab , num , ypred , x , y):
         bin_map[x[i]][y[i]] = ypred[i]
         i += 1
 
-    bin_name = str(img_i) + lab + '.mat'
+    bin_name = 'maps/' + str(img_i) + lab + '.mat'
     print bin_name
     scipy.io.savemat(bin_name,mdict={'bin_map': bin_map})
     
@@ -565,7 +565,7 @@ def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[5
                 #     best_test_loss = this_test_score
                 #     best_test_iter = iter
                 #     best_params = params
-                
+
                 if this_validation_loss < best_validation_loss:
 
                     if this_validation_loss < best_validation_loss *  \

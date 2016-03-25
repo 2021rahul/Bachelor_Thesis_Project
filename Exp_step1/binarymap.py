@@ -14,7 +14,7 @@ from binmapdrop_pickling import *
 
 srng = RandomStreams()
 
-def create_binmap(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,80], batch_size=390):
+def create_binmap(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,80], batch_size=468):
     
     rng = np.random.RandomState(23455)
 
@@ -22,7 +22,7 @@ def create_binmap(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,
     testydirname = 'Test_anno/'
     testdataset = load_data(testxdirname,testydirname)
 
-    n_binmap_batches = 390
+    n_binmap_batches = 468
 
     x = T.matrix('x')   
     y = T.ivector('y')
@@ -55,12 +55,12 @@ def create_binmap(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,
         rng,
         input=layer2_input,
         n_in=nkerns[1] * 8 * 8,
-        n_out=390,
+        n_out=468,
         activation=T.tanh,
         dropout=0.5
     )
 
-    layer3 = LogisticRegression(input=layer2.output, n_in=390, n_out=2)
+    layer3 = LogisticRegression(input=layer2.output, n_in=468, n_out=2)
 
     test_model2 = theano.function(
        [x , y],
@@ -90,7 +90,7 @@ def create_binmap(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,
     best_model()
     print 'BEST MODEL UPDATED..........' 
 
-    for im in range(77,80):
+    for im in range(0,72):
         print im
         nrow = testdataset[im][0].shape[0]
         for i in xrange(n_binmap_batches):
@@ -106,25 +106,10 @@ def create_binmap(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,
                 binmap_ygen = np.concatenate([binmap_ygen,np.asarray(iygen)])
                 ypred = np.concatenate([ypred,np.asarray(test_labels)])
                 yanno = np.concatenate([yanno,np.squeeze(np.asarray(binmap_y))])                             
-        binary_map(testdataset[im] , im , '_tl' , 390*390 , ypred , binmap_xgen , binmap_ygen)
-        binary_map(testdataset[im] , im , '_tlbin' , 390*390 , yanno , binmap_xgen , binmap_ygen)
+        binary_map(testdataset[im] , im , '_tl' , 468*468 , ypred , binmap_xgen , binmap_ygen)
+        binary_map(testdataset[im] , im , '_tlbin' , 468*468 , yanno , binmap_xgen , binmap_ygen)
 
-        for i in xrange(n_binmap_batches):
-            binmap_x,binmap_y,ixgen,iygen = load_tr_img(i+25,testdataset[im])                 
-            test_labels = test_model2(binmap_x , np.squeeze(np.asarray(binmap_y)))
-            if i==0:
-                binmap_xgen = np.asarray(ixgen)
-                binmap_ygen = np.asarray(iygen)
-                ypred = np.asarray(test_labels)
-                yanno = np.squeeze(np.asarray(binmap_y))
-            else:
-                binmap_xgen = np.concatenate([binmap_xgen,np.asarray(ixgen)])
-                binmap_ygen = np.concatenate([binmap_ygen,np.asarray(iygen)])
-                ypred = np.concatenate([ypred,np.asarray(test_labels)])
-                yanno = np.concatenate([yanno,np.squeeze(np.asarray(binmap_y))])                             
-        binary_map(testdataset[im] , im , '_tr' , 390*390 , ypred , binmap_xgen , binmap_ygen)
-        binary_map(testdataset[im] , im , '_trbin' , 390*390 , yanno , binmap_xgen , binmap_ygen)
-
+        
         for i in xrange(n_binmap_batches):
             binmap_x,binmap_y,ixgen,iygen = load_bl_img(nrow-i-26,testdataset[im])                 
             test_labels = test_model2(binmap_x , np.squeeze(np.asarray(binmap_y)))
@@ -138,24 +123,8 @@ def create_binmap(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,
                 binmap_ygen = np.concatenate([binmap_ygen,np.asarray(iygen)])
                 ypred = np.concatenate([ypred,np.asarray(test_labels)])
                 yanno = np.concatenate([yanno,np.squeeze(np.asarray(binmap_y))])                             
-        binary_map(testdataset[im] , im , '_bl' , 390*390 , ypred , binmap_xgen , binmap_ygen)
-        binary_map(testdataset[im] , im , '_blbin' , 390*390 , yanno , binmap_xgen , binmap_ygen)
-
-        for i in xrange(n_binmap_batches):
-            binmap_x,binmap_y,ixgen,iygen = load_br_img(nrow-i-26,testdataset[im])                 
-            test_labels = test_model2(binmap_x , np.squeeze(np.asarray(binmap_y)))
-            if i==0:
-                binmap_xgen = np.asarray(ixgen)
-                binmap_ygen = np.asarray(iygen)
-                ypred = np.asarray(test_labels)
-                yanno = np.squeeze(np.asarray(binmap_y))
-            else:
-                binmap_xgen = np.concatenate([binmap_xgen,np.asarray(ixgen)])
-                binmap_ygen = np.concatenate([binmap_ygen,np.asarray(iygen)])
-                ypred = np.concatenate([ypred,np.asarray(test_labels)])
-                yanno = np.concatenate([yanno,np.squeeze(np.asarray(binmap_y))])                             
-        binary_map(testdataset[im] , im , '_br' , 390*390 , ypred , binmap_xgen , binmap_ygen)
-        binary_map(testdataset[im] , im , '_brbin' , 390*390 , yanno , binmap_xgen , binmap_ygen)
+        binary_map(testdataset[im] , im , '_bl' , 468*468 , ypred , binmap_xgen , binmap_ygen)
+        binary_map(testdataset[im] , im , '_blbin' , 468*468 , yanno , binmap_xgen , binmap_ygen)
 
 if __name__ == '__main__':
     create_binmap()

@@ -26,8 +26,3 @@ for i=0:12
     objHausdorff(i+1,1) = ObjectHausdorff(bw,bwa);
     
 end
-
-%  precision = TP./(TP + FP);
-%  recall = TP./(TP + FN);
-% 
-%  score = (2*precision.*recall)./(precision+recall);

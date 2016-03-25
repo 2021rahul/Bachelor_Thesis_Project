@@ -7,10 +7,10 @@ score=zeros(78,1);
 
 
 for i=0:79
-    im = strcat(int2str(i), '_postof.bmp');
+    im = strcat(int2str(i), '_post.bmp');
     anno = strcat(int2str(i),'_bin.bmp');
-    %im = strcat('C:\Users\SURENDRA JAIN\Documents\AJ\Acads\VII sem\BTP\new_result_maps\', im);
-    %anno = strcat('C:\Users\SURENDRA JAIN\Documents\AJ\Acads\VII sem\BTP\new_result_maps\', anno);
+    im = strcat('/media/rahul/1098D6BA98D69E12/academics/SEMESTER_7/BTP/Bachelor_Thesis_Project/Exp1_a/', im);
+    anno = strcat('/media/rahul/1098D6BA98D69E12/academics/SEMESTER_7/BTP/Bachelor_Thesis_Project/Exp1_a/', anno);
     
     S = imread(im);
     G = imread(anno);

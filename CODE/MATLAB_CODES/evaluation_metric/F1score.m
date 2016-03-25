@@ -24,18 +24,18 @@ G = single(G);
 listS = unique(S);            % list of labels of segmented objects
 listS(listS == 0) = [];       % remove the label of the background
 numS = length(listS);         % the total number of segmented objects in S
-numS
+
 listG = unique(G);            % list of labels of ground truth objects
 listG(listG == 0) = [];       % remove the label of the background
 numG = length(listG);         % the total number of ground truth objects in G
-numG
+
 if numS == 0 && numG == 0    % no segmented object & no ground truth objects
     score = 1;
-    print('yes\n');
+    
     return 
 elseif numS == 0 || numG == 0
     score = 0;
-    print('yes\n');
+    
     return
 else
     % do nothing

@@ -1,4 +1,4 @@
-for i = 31:59
+for i = 60:71
     file = strcat(int2str(i),'_tl.mat');
     load(file);
     S = zeros(size(bin_map));

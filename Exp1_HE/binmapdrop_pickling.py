@@ -32,7 +32,7 @@ def load_data(xdirname,ydirname):
         H = scipy.io.loadmat(hname)
         H = H['H']
         E = scipy.io.loadmat(ename)
-        E = E['E']\
+        E = E['E']
         
         yim = Image.open(aname)
         width,height = yim.size
@@ -99,7 +99,7 @@ def load_tl_img(x,img):
     xgen = []
     ygen = []    
     
-    for y in range(25,390+25):
+    for y in range(25,468+25):
         xh = img[0][x-25:x+26,y-25:y+26]
         xe = img[1][x-25:x+26,y-25:y+26]
         yval[0][0] = img[2][x,y]
@@ -127,7 +127,7 @@ def load_tr_img(x,img):
     xgen = []
     ygen = []    
     
-    for y in range(ncol-25-390,ncol-25):
+    for y in range(ncol-25-468,ncol-25):
         xh = img[0][x-25:x+26,y-25:y+26]
         xe = img[1][x-25:x+26,y-25:y+26]
         yval[0][0] = img[2][x,y]
@@ -138,7 +138,7 @@ def load_tr_img(x,img):
         ximg = np.concatenate([xh , xe] , axis=1)
         xgen.append(x)
         ygen.append(y)
-        if y==ncol-25-390:
+        if y==ncol-25-468:
             datax = ximg
             datay = yval
         else:
@@ -155,7 +155,7 @@ def load_bl_img(x,img):
     xgen = []
     ygen = []    
     
-    for y in range(25,415):
+    for y in range(25,468+25):
         xh = img[0][x-25:x+26,y-25:y+26]
         xe = img[1][x-25:x+26,y-25:y+26]
         yval[0][0] = img[2][x,y]
@@ -184,7 +184,7 @@ def load_br_img(x,img):
     xgen = []
     ygen = []    
     
-    for y in range(ncol-25-390,ncol-25):
+    for y in range(ncol-25-468,ncol-25):
         xh = img[0][x-25:x+26,y-25:y+26]
         xe = img[1][x-25:x+26,y-25:y+26]
         yval[0][0] = img[2][x,y]
@@ -195,7 +195,7 @@ def load_br_img(x,img):
         ximg = np.concatenate([xh , xe] , axis=1)
         xgen.append(x)
         ygen.append(y)
-        if y==ncol-25-390:
+        if y==ncol-25-468:
             datax = ximg
             datay = yval
         else:
@@ -367,14 +367,14 @@ class LogisticRegression(object):
             raise NotImplementedError()
         print('here \n')
         
-def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,80], batch_size=390):
+def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,80], batch_size=468):
     
     rng = np.random.RandomState(23455)
     
     trainxdirname = 'Train/'
     trainydirname = 'Train_anno/'
     traindataset = load_data(trainxdirname,trainydirname)
-    for vdatai in range(0,65):
+    for vdatai in range(0,78):
         imgvx,imgvy,vxgen,vygen = load_img(360,traindataset[vdatai])
         if vdatai==0:
             validx = imgvx
@@ -388,30 +388,30 @@ def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[5
     print(sum(validy == 0))
 
 
-    testxdirname = 'Test/'
-    testydirname = 'Test_anno/'
-    testdataset = load_data(testxdirname,testydirname)
-    txgen = []
-    tygen = []
-    for testi in range(0,13):
-        imgvx,imgvy,xgen,ygen = load_img(1800,testdataset[testi])
-        txgen.append(xgen)
-        tygen.append(ygen)
-        if testi==0:
-            testx = imgvx
-            testy = imgvy
-        else:
-            testx = np.concatenate([testx,imgvx])
-            testy = np.concatenate([testy,imgvy])
-    print testx.shape  
-    print('test dataset')
-    print(sum(testy == 1))
-    print(sum(testy == 0))
+    # testxdirname = 'Test/'
+    # testydirname = 'Test_anno/'
+    # testdataset = load_data(testxdirname,testydirname)
+    # txgen = []
+    # tygen = []
+    # for testi in range(0,13):
+    #     imgvx,imgvy,xgen,ygen = load_img(1800,testdataset[testi])
+    #     txgen.append(xgen)
+    #     tygen.append(ygen)
+    #     if testi==0:
+    #         testx = imgvx
+    #         testy = imgvy
+    #     else:
+    #         testx = np.concatenate([testx,imgvx])
+    #         testy = np.concatenate([testy,imgvy])
+    # print testx.shape  
+    # print('test dataset')
+    # print(sum(testy == 1))
+    # print(sum(testy == 0))
 
     n_train_batches = 600
     n_valid_batches = validx.shape[0]/batch_size
-    n_test_batches = testx.shape[0]/batch_size
-    n_binmap_batches = 390
+    # n_test_batches = testx.shape[0]/batch_size
+    # n_binmap_batches = 390
 
     x = T.matrix('x')   
     y = T.ivector('y')
@@ -444,12 +444,12 @@ def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[5
         rng,
         input=layer2_input,
         n_in=nkerns[1] * 8 * 8,
-        n_out=390,
+        n_out=468,
         activation=T.tanh,
         dropout=0.5
     )
 
-    layer3 = LogisticRegression(input=layer2.output, n_in=390, n_out=2)
+    layer3 = LogisticRegression(input=layer2.output, n_in=468, n_out=2)
 
     cost = layer3.negative_log_likelihood(y)
 
@@ -508,7 +508,7 @@ def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[5
 
         for minibatch_index in xrange(n_train_batches):
 
-            for datai in range(0,65):
+            for datai in range(0,78):
                 imgvx,imgvy,vxgen,vygen = load_img(6,traindataset[datai])
                 if datai==0:
                     trainx = imgvx
@@ -537,18 +537,18 @@ def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[5
                       (epoch, minibatch_index + 1, n_train_batches,
                        this_validation_loss * 100.))
                        
-                test_losses = [
-                    test_model(testx[i*batch_size:(i+1)*batch_size] , np.squeeze(np.asarray(testy[i*batch_size:(i+1)*batch_size])))
-                    for i in xrange(n_test_batches)
-                ]
-                this_test_score = np.mean(test_losses)
-                print (('test error of best model %f %%\n') %
-                        (this_test_score * 100.))
+                # test_losses = [
+                #     test_model(testx[i*batch_size:(i+1)*batch_size] , np.squeeze(np.asarray(testy[i*batch_size:(i+1)*batch_size])))
+                #     for i in xrange(n_test_batches)
+                # ]
+                # this_test_score = np.mean(test_losses)
+                # print (('test error of best model %f %%\n') %
+                #         (this_test_score * 100.))
 
-                if this_test_score < best_test_loss:
-                    best_test_loss = this_test_score
-                    best_test_iter = iter
-                    best_params = params
+                # if this_test_score < best_test_loss:
+                #     best_test_loss = this_test_score
+                #     best_test_iter = iter
+                #     best_params = params
                    
                 if this_validation_loss < best_validation_loss:
 
@@ -558,7 +558,7 @@ def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[5
 
                     best_validation_loss = this_validation_loss
                     best_validation_iter = iter
-                    
+                    best_params = params
 
             if patience <= iter:
                 done_looping = True

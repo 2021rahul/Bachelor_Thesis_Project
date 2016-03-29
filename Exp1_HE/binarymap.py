@@ -111,7 +111,7 @@ def create_binmap(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,
 
         
         for i in xrange(n_binmap_batches):
-            binmap_x,binmap_y,ixgen,iygen = load_bl_img(nrow-i-26,testdataset[im])                 
+            binmap_x,binmap_y,ixgen,iygen = load_tr_img(nrow-i-26,testdataset[im])                 
             test_labels = test_model2(binmap_x , np.squeeze(np.asarray(binmap_y)))
             if i==0:
                 binmap_xgen = np.asarray(ixgen)

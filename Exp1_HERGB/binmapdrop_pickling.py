@@ -293,7 +293,7 @@ def binary_map(img , img_i , lab , num , ypred , x , y):
         bin_map[x[i]][y[i]] = ypred[i]
         i += 1
 
-    bin_name = str(img_i) + lab + '.mat'
+    bin_name = 'maps/' + str(img_i) + lab + '.mat'
     print bin_name
     scipy.io.savemat(bin_name,mdict={'bin_map': bin_map})
     

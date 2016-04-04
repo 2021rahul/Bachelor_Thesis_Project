@@ -117,7 +117,7 @@ def load_tl_img(x,img):
     xgen = []
     ygen = []    
     
-    for y in range(25,234+25):
+    for y in range(25,468+25):
         xred = img[0][x-25:x+26,y-25:y+26]
         xgreen = img[1][x-25:x+26,y-25:y+26]
         xblue = img[2][x-25:x+26,y-25:y+26]
@@ -151,7 +151,7 @@ def load_tr_img(x,img):
     xgen = []
     ygen = []    
     
-    for y in range(ncol-25-234,ncol-25):
+    for y in range(ncol-25-468,ncol-25):
         xred = img[0][x-25:x+26,y-25:y+26]
         xgreen = img[1][x-25:x+26,y-25:y+26]
         xblue = img[2][x-25:x+26,y-25:y+26]
@@ -168,7 +168,7 @@ def load_tr_img(x,img):
         ximg = np.concatenate([xred , xgreen , xblue , xh , xe] , axis=1)
         xgen.append(x)
         ygen.append(y)
-        if y==ncol-25-234:
+        if y==ncol-25-468:
             datax = ximg
             datay = yval
         else:
@@ -185,7 +185,7 @@ def load_bl_img(x,img):
     xgen = []
     ygen = []    
     
-    for y in range(25,234+25):
+    for y in range(25,468+25):
         xred = img[0][x-25:x+26,y-25:y+26]
         xgreen = img[1][x-25:x+26,y-25:y+26]
         xblue = img[2][x-25:x+26,y-25:y+26]
@@ -220,7 +220,7 @@ def load_br_img(x,img):
     xgen = []
     ygen = []    
     
-    for y in range(ncol-25-234,ncol-25):
+    for y in range(ncol-25-468,ncol-25):
         xred = img[0][x-25:x+26,y-25:y+26]
         xgreen = img[1][x-25:x+26,y-25:y+26]
         xblue = img[2][x-25:x+26,y-25:y+26]
@@ -237,7 +237,7 @@ def load_br_img(x,img):
         ximg = np.concatenate([xred , xgreen , xblue , xh , xe] , axis=1)
         xgen.append(x)
         ygen.append(y)
-        if y==ncol-25-234:
+        if y==ncol-25-468:
             datax = ximg
             datay = yval
         else:
@@ -254,7 +254,7 @@ def load_img3(x,img):
     xgen = []
     ygen = []    
 
-    for y in range(25,234+25):
+    for y in range(25,468+25):
         xred = img[0][x-25:x+26,y-25:y+26]
         xgreen = img[1][x-25:x+26,y-25:y+26]
         xblue = img[2][x-25:x+26,y-25:y+26]
@@ -415,7 +415,7 @@ class LogisticRegression(object):
             raise NotImplementedError()
         print('here \n')
         
-def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,80], batch_size=234):
+def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,80], batch_size=468):
     
     rng = np.random.RandomState(23455)
     
@@ -456,7 +456,7 @@ def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[5
     # print(sum(testy == 1))
     # print(sum(testy == 0))
 
-    n_train_batches = 1200
+    n_train_batches = 600
     n_valid_batches = validx.shape[0]/batch_size
     # n_test_batches = testx.shape[0]/batch_size
     # n_binmap_batches = 390
@@ -492,12 +492,12 @@ def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[5
         rng,
         input=layer2_input,
         n_in=nkerns[1] * 8 * 8,
-        n_out=234,
+        n_out=468,
         activation=T.tanh,
         dropout=0.5
     )
 
-    layer3 = LogisticRegression(input=layer2.output, n_in=234, n_out=2)
+    layer3 = LogisticRegression(input=layer2.output, n_in=468, n_out=2)
 
     cost = layer3.negative_log_likelihood(y)
 
@@ -557,7 +557,7 @@ def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[5
         for minibatch_index in xrange(n_train_batches):
 
             for datai in range(0,78):
-                imgvx,imgvy,vxgen,vygen = load_img(3,traindataset[datai])
+                imgvx,imgvy,vxgen,vygen = load_img(6,traindataset[datai])
                 if datai==0:
                     trainx = imgvx
                     trainy = imgvy
@@ -650,8 +650,8 @@ def evaluate_lenet5(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[5
     #             binmap_ygen = np.concatenate([binmap_ygen,np.asarray(iygen)])
     #             ypred = np.concatenate([ypred,np.asarray(test_labels)])
     #             #yanno = np.concatenate([yanno,np.squeeze(np.asarray(binmap_y))])                             
-    #     binary_map(testdataset[im] , im , 234*234 , ypred , binmap_xgen , binmap_ygen)
-    #     #binary_map(testdataset[im] , im*10 , 234*234 , yanno , binmap_xgen , binmap_ygen)
+    #     binary_map(testdataset[im] , im , 468*468 , ypred , binmap_xgen , binmap_ygen)
+    #     #binary_map(testdataset[im] , im*10 , 468*468 , yanno , binmap_xgen , binmap_ygen)
 
 if __name__ == '__main__':
     evaluate_lenet5()

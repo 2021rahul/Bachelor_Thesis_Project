@@ -37,7 +37,7 @@ def load_data(xdirname , ydirname):
         E = scipy.io.loadmat(ename)
         E = E['E']
 
-        xim = Image.open(xname)
+        xim = Image.open(iname)
         xpix = xim.load()
         yim = Image.open(aname)
         ypix = yim.load()

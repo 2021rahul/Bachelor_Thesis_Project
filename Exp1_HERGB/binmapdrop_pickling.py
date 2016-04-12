@@ -75,8 +75,8 @@ def load_img(num,img):
         y = random.randint(25,ncol-26)
             
         if(
-            img[3][x,y]==0 and num0<num/2 or
-            img[3][x,y]==1 and num1<num/2
+            img[5][x,y]==0 and num0<num/2 or
+            img[5][x,y]==1 and num1<num/2
         ):
          
             xred = img[0][x-25:x+26,y-25:y+26]

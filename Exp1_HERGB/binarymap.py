@@ -35,7 +35,7 @@ def create_binmap(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,
         rng,
         input=layer0_input,
         image_shape=(batch_size, 5, 51, 51),
-        filter_shape=(nkerns[0], , 9, 9),
+        filter_shape=(nkerns[0], 5, 9, 9),
         dropout = 0.1,
         poolsize=(2 , 2)  
     )
@@ -90,7 +90,7 @@ def create_binmap(learning_rate=0.01 , lr_dec = 0.4 , n_epochs=200 , nkerns=[50,
     best_model()
     print 'BEST MODEL UPDATED..........' 
 
-    for im in range(0,72):
+    for im in range(44,72):
         print im
         nrow = testdataset[im][0].shape[0]
         for i in xrange(n_binmap_batches):
